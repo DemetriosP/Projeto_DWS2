@@ -20,9 +20,8 @@ export const addUser = async (user, dispatch, navigate) => {
         const res = await publicRequest.post(`/auth/register`, user);
         dispatch(addUserSuccess(res.data));
         alert("Usuário cadastrado com sucesso");
-        await login(dispatch, user);
+        await login(dispatch, user, navigate);
         await createWhislist(user, dispatch);
-        navigate("/");
     } catch (err) {
         dispatch(addUserFailure());
         if(err.response.data.code === 11000 && err.response.data.keyValue.email === user.email) alert("E-mail já cadastrado");
