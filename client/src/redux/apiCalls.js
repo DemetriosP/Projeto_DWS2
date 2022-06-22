@@ -2,11 +2,12 @@ import {addUserFailure, addUserStart, addUserSuccess, loginFailure, loginStart, 
 import {createWhislistStart, createWhislistSuccess, createWhislistFailure} from "./whislistRedux";
 import {publicRequest, userRequest} from "../requestMethods";
 
-export const login = async (dispatch, user) => {
+export const login = async (dispatch, user, navigate) => {
     dispatch(loginStart());
     try {
         const res = await publicRequest.post("/auth/login", user);
         dispatch(loginSucess(res.data));
+        navigate("/")
     } catch (err) {
         dispatch(loginFailure());
     }

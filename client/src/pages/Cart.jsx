@@ -160,6 +160,7 @@ function Cart() {
     const user = useSelector((state) => state.user.currentUser);
 
     const dispatch = useDispatch();
+
     useEffect(() => {
         const makeRequest = async () => {
             try {

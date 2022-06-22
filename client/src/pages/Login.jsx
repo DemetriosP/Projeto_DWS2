@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
 import {mobile} from "../responsive";
 import {login} from "../redux/apiCalls";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -30,7 +30,7 @@ const Form = styled.form`
 const Input = styled.input`
   flex: 1;
   min-width: 40%;
-  margin: 10px 0px;
+  margin: 10px;
   padding: 10px;
 `;
 
@@ -54,14 +54,11 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const {isFetching, error} = useSelector((state) => state.user);
-
-    const usuario = useSelector((state) => state.user)
-    console.log(usuario)
+    const navigate = useNavigate();
 
     const handleClick = (e) => {
         e.preventDefault();
-        login(dispatch, {username, password});
+        login(dispatch, {username, password}, navigate);
     };
     return (
         <Container>
@@ -71,7 +68,7 @@ const Login = () => {
                 <Form>
                     <Input placeholder="usuario" onChange={(e) => setUsername(e.target.value)}/>
                     <Input placeholder="senha" type="password" onChange={(e) => setPassword(e.target.value)}/>
-                    <Button onClick={handleClick} disabled={isFetching}>Entrar</Button>
+                    <Button onClick={handleClick}>Entrar</Button>
                     <Link to="/register">Cadastre-se</Link>
                 </Form>
             </Wrapper>

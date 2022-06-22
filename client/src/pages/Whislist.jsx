@@ -70,6 +70,20 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+  margin-top: 30px;
+`;
+
+const EmptyWhislist = styled.div`
+  border: 0.5px solid lightgray;
+  padding: 100px;
+  text-align: center;
+  margin: 50px 300px;
+`;
+
+const Hr = styled.hr`
+  background-color: #eee;
+  border: none;
+  height: 1px;
 `;
 
 function Whislist() {
@@ -90,37 +104,52 @@ function Whislist() {
         <Container>
             <Navbar/>
             <Announcement/>
-            <Wrapper>
-                <Title>LISTA DE DESEJOS</Title>
-                <Bottom>
-                    <Info>
-                        {whislist.products.map((product) => (
-                            <Product>
-                                <ProductDetail>
-                                    <Image src={product.img}/>
-                                    <Details>
-                                        <ProductName>
-                                            <b>Produto: {product.tittle}</b>
-                                        </ProductName>
-                                        <ProductId>
-                                            <b>Descrição: {product.desc}</b>
-                                        </ProductId>
-                                        <ProductId>
-                                            <b>Valor: {product.price}</b>
-                                        </ProductId>
-                                    </Details>
-                                </ProductDetail>
-                                <PriceDetail>
-                                    <button onClick={() => handleRemove(product, product.quantity)}>
-                                        <DeleteOutlineRounded></DeleteOutlineRounded>
-                                    </button>
-                                </PriceDetail>
-                            </Product>
-                        ))}
-                    </Info>
-                </Bottom>
-                <Button onClick={() => handleClean()}>LIMPAR LISTA DE DESEJOS</Button>
-            </Wrapper>
+            {whislist.products.length ? (
+                <Wrapper>
+                    <Title>LISTA DE DESEJOS</Title>
+                    <Bottom>
+                        <Info>
+                            {whislist.products.map((product) => (
+                                <Product>
+                                    <ProductDetail>
+                                        <Image src={product.img}/>
+                                        <Details>
+                                            <ProductName>
+                                                <b>Produto: {product.tittle}</b>
+                                            </ProductName>
+                                            <ProductId>
+                                                <b>Descrição: {product.desc}</b>
+                                            </ProductId>
+                                            <ProductId>
+                                                <b>Valor: {product.price}</b>
+                                            </ProductId>
+                                        </Details>
+                                    </ProductDetail>
+                                    <PriceDetail>
+                                        <button onClick={() => handleRemove(product, product.quantity)}>
+                                            <DeleteOutlineRounded></DeleteOutlineRounded>
+                                        </button>
+                                    </PriceDetail>
+                                </Product>
+                            ))}
+                            <Hr></Hr>
+                        </Info>
+                    </Bottom>
+                    <Button onClick={() => handleClean()}>LIMPAR LISTA DE DESEJOS</Button>
+                </Wrapper>
+            ) : (
+                <Wrapper>
+                    <Title>LISTA DE DESEJOS</Title>
+                    <EmptyWhislist>
+                        <h1>
+                            Sua lista de desejos está vazia
+                        </h1>
+                        <p>
+                            Volte para página inicial e adicione produtos
+                        </p>
+                    </EmptyWhislist>
+                </Wrapper>
+            )}
             <Footer/>
         </Container>
     );
