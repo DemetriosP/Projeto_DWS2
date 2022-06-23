@@ -1,5 +1,5 @@
 import {addUserFailure, addUserStart, addUserSuccess, loginFailure, loginStart, loginSucess,} from "./userRedux";
-import {createWhislistFailure, createWhislistStart, createWhislistSuccess, iniciateLista, addWhislistProduct, removeWhislistProduct} from "./whislistRedux";
+import {createWhislistFailure, createWhislistStart, createWhislistSuccess, iniciateLista, addWhislistProduct, removeWhislistProduct, cleanWhislist} from "./whislistRedux";
 import {publicRequest, userRequest} from "../requestMethods";
 
 export const login = async (dispatch, user, navigate) => {
@@ -89,7 +89,8 @@ export const addWhislistProductBD = async (product, dispatch, username) => {
         lista.products.push(product._id);
         console.log(lista)
         await publicRequest.put("/whislists/" + lista._id, {
-            products : lista.products
+            products : lista.products,
+            quantity : lista.products.length
         });
         dispatch(addWhislistProduct(product))
 
@@ -106,9 +107,26 @@ export const removeWhislistProductBD = async (product, dispatch, username) => {
         const listaRemovida = lista.products.filter((x) => x !== product._id);
         console.log(listaRemovida)
         await publicRequest.put("/whislists/" + lista._id, {
-            products : listaRemovida
+            products : listaRemovida,
+            quantity: listaRemovida.length
         });
         dispatch(removeWhislistProduct(product))
+
+    } catch(erro){
+        console.log(erro)
+    }
+
+}
+
+export const cleanWhislistBD = async(dispatch, username) => {
+
+    try{
+        const lista = await (await publicRequest.get("/whislists/find/" + username)).data;
+        await publicRequest.put("/whislists/" + lista._id, {
+            products : [],
+            quantity : 0
+        });
+        dispatch(cleanWhislist())
 
     } catch(erro){
         console.log(erro)

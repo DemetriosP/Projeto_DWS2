@@ -5,9 +5,8 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import {mobile} from "../responsive";
 import {useDispatch, useSelector} from "react-redux";
-import {cleanWhislist, removeWhislistProduct} from "../redux/whislistRedux";
 import React from "react";
-import {removeWhislistProductBD} from "../redux/apiCalls";
+import {removeWhislistProductBD, cleanWhislistBD} from "../redux/apiCalls";
 
 const Container = styled.div``;
 
@@ -100,7 +99,7 @@ function Whislist() {
     }
 
     const handleClean = () => {
-        dispatch(cleanWhislist())
+        cleanWhislistBD(dispatch, username)
     }
 
     return (
