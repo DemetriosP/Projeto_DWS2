@@ -1,5 +1,5 @@
 import {addUserFailure, addUserStart, addUserSuccess, loginFailure, loginStart, loginSucess,} from "./userRedux";
-import {createWhislistFailure, createWhislistStart, createWhislistSuccess, iniciateLista} from "./whislistRedux";
+import {createWhislistFailure, createWhislistStart, createWhislistSuccess, iniciateLista, addWhislistProduct} from "./whislistRedux";
 import {publicRequest, userRequest} from "../requestMethods";
 
 export const login = async (dispatch, user, navigate) => {
@@ -77,6 +77,24 @@ const buscaProduto = async (productoId) => {
         return await publicRequest.get("/products/find/" + productoId);
     } catch (err) {
         console.log(err.response.data)
+    }
+
+}
+
+export const addWhislistProductBD = async (product, dispatch, username) => {
+
+    try{
+
+        const lista = await (await publicRequest.get("/whislists/find/" + username)).data;
+        lista.products.push(product._id);
+        console.log(lista)
+        await publicRequest.put("/whislists/" + lista._id, {
+            products : lista.products
+        });
+        dispatch(addWhislistProduct(product))
+
+    } catch(erro){
+        console.log(erro)
     }
 
 }

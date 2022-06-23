@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {publicRequest} from "../requestMethods";
 import {addProduct} from "../redux/cartRedux";
 import {addWhislistProduct} from "../redux/whislistRedux";
+import {addWhislistProductBD} from "../redux/apiCalls";
 
 const Info = styled.div`
   opacity: 0;
@@ -93,7 +94,7 @@ const Product = ({item}) => {
     }
 
     const handleWhislistClick = () => {
-        if(user) dispatch(addWhislistProduct({...product}));
+        if (user) addWhislistProductBD(product, dispatch, user.username);
         else navigate("/login");
     }
 
