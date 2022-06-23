@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 const whislistSlice = createSlice({
     name: "whislist",
     initialState: {
-        userId: '',
+        username: '',
         products: [],
         quantity: 0,
     },
@@ -14,6 +14,7 @@ const whislistSlice = createSlice({
 
             if (!isExist) {
                 state.quantity += 1;
+                console.log(action.payload);
                 state.products.push(action.payload);
             }
         },
@@ -31,9 +32,13 @@ const whislistSlice = createSlice({
         },
         createWhislistFailure: () => {
         },
-
+        iniciateLista: (state, action) => {
+            state.products = action.payload.products;
+            state.quantity = action.payload.products.length;
+            state.username = action.payload.user.username;
+        }
     },
 });
 
-export const {addWhislistProduct, removeWhislistProduct, cleanWhislist, createWhislistFailure, createWhislistSuccess, createWhislistStart} = whislistSlice.actions;
+export const {addWhislistProduct, removeWhislistProduct, cleanWhislist, createWhislistFailure, createWhislistSuccess, createWhislistStart, iniciateLista} = whislistSlice.actions;
 export default whislistSlice.reducer;

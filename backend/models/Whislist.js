@@ -2,12 +2,9 @@ const mongoose = require("mongoose");
 
 const WhislistSchema = new mongoose.Schema(
     {
-        userId: {type: String, required: true, unique: true},
-        products: [
-            {
-                productId: {type: String},
-            }
-        ],
+        username: {type: String, required: true, unique: true},
+        products: [{type: String}],
+        quantity: {type: Number, default: 0}
     },
     {timestamps: true}
 )

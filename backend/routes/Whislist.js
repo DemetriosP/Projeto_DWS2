@@ -1,9 +1,5 @@
 const Whislist = require("../models/Whislist");
-const {route} = require("./Auth");
-const {verifyTokenAndAuthorization, verifyTokenAndAdmin} = require("./verifyToken");
-
 const router = require("express").Router();
-const {verifyToken} = require("express").Router;
 
 //CREATE
 
@@ -18,7 +14,7 @@ router.post("/", async (req, res) => {
 })
 
 //UPDATE
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.put("/:id", async (req, res) => {
     try {
         const updateWhislist = await Whislist.findByIdAndUpdate(
             req.params.id,
@@ -34,7 +30,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 })
 
 //delete
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.delete("/:id", async (req, res) => {
     try {
         await Whislist.findByIdAndDelete(req.params.id);
         res.status(200).json("Lista de desejaos foi deletada");
@@ -44,9 +40,9 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 })
 
 //GET USER WHISLIST
-router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:username", async (req, res) => {
     try {
-        const whislist = await Whislist.findOne({userId: req.params.userId});
+        const whislist = await Whislist.findOne({username: req.params.username});
         res.status(200).json(whislist);
     } catch (err) {
         res.status(500).json(whislist);
@@ -54,7 +50,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET ALL
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const whislists = await Whislist.find();
         res.status(200).json(whislists);

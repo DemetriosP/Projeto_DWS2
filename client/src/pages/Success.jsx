@@ -16,7 +16,7 @@ const Success = () => {
                 const res = await userRequest.post("/orders", {
                     name: currentUser.username,
                     products: trans.products.map((item) => ({
-                        _id: item._id,
+                        productId: item._id,
                         quantity: item._quantity,
                     })),
                     amount: trans.total,
