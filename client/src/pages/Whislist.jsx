@@ -7,6 +7,7 @@ import {mobile} from "../responsive";
 import {useDispatch, useSelector} from "react-redux";
 import {cleanWhislist, removeWhislistProduct} from "../redux/whislistRedux";
 import React from "react";
+import {removeWhislistProductBD} from "../redux/apiCalls";
 
 const Container = styled.div``;
 
@@ -88,12 +89,14 @@ const Hr = styled.hr`
 
 function Whislist() {
 
+    const username = useSelector((state) => state.user.currentUser.username);
+
     const whislist = useSelector((state) => state.whislist);
 
     const dispatch = useDispatch();
 
     const handleRemove = (product) => {
-        dispatch(removeWhislistProduct({...product}));
+        removeWhislistProductBD(product, dispatch, username)
     }
 
     const handleClean = () => {
